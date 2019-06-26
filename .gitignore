@@ -56,3 +56,5 @@ DEBUILD/*
 
 # build dir
 build/*
+
+nitro_luks
