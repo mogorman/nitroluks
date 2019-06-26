@@ -1,15 +1,17 @@
 SRC_DIR = nitroluks.orig
 VERSION = 0.1
 
+
+binary: init buildlib
+	g++ src/nitro_luks.c -o build/nitro_luks -Lbuild/ -l:libnitrokey.so.3 -Wall
+
+
 init:
 	mkdir -p build
 
 clean:
 	rm -rf build/
 	rm -rf DEBUILD/
-
-binary: init buildlib
-	g++ src/nitro_luks.c -o build/nitro_luks -Lbuild/ -l:libnitrokey.so.3 -Wall
 
 buildlib:
 	cp -r src/libnitrokey build
