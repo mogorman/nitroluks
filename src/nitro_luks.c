@@ -61,7 +61,8 @@ int main(int argc, char const *argv[])
     else 
     {
         const char* serial = NK_device_serial_number();
-        fprintf(stderr, "*** Nitrokey : %s found!\n", serial);
+        const int version = NK_get_major_firmware_version();
+          fprintf(stderr, "*** Nitrokey: %d : %s found!\n", version, serial);
     }
     
     do
@@ -76,7 +77,9 @@ int main(int argc, char const *argv[])
         // Ask the password and unlock the nitrokey
         fprintf(stderr, "Enter the (user) PIN:\n");
         disable_echo();
-        fgets(password, sizeof(password), stdin);
+        if(!fgets(password, sizeof(password), stdin)) {
+          return error("*** Error no input.\n");
+        }
         reset_input_mode();
         // remove the trailing newline
         password[strcspn(password, "\n")] = 0;
