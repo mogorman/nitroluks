@@ -61,9 +61,19 @@ int main(int argc, char const *argv[])
     } 
     else 
     {
-        const char* serial = NK_device_serial_number();
+      int i = 0;
+      const char* serial = NK_device_serial_number();
+
         const int version = NK_get_major_firmware_version();
-        fprintf(stderr, "Found Nitrokey: %s Firmware: %d\n", serial, version);
+        fprintf(stderr, "Found Nitrokey: \"");
+        while(serial[i]) {
+          fputc(toupper(serial[i]), stderr);
+          i++;
+          if(!(i%4) && serial[i]) {
+            fputc(' ', stderr);
+          }
+        }
+        fprintf(stderr, "\" Firmware Version: 0.%d\n", version);
     }
     
     do
